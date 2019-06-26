@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: druid-broker
+  namespace: druid
+  labels:
+    component: broker
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8082
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    component: broker

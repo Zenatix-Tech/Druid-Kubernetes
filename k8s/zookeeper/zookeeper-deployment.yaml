@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druid-zookeeper
+  namespace: druid
+  labels:
+    component: zookeeper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: zookeeper
+  template:
+    metadata:
+      labels:
+        component: zookeeper
+    spec:
+      containers:
+        - name: druid
+          image: deepaksood619/zendruid:v1.0.6
+          imagePullPolicy: IfNotPresent
+          args: ["bin/run-zk", "/druid/conf" ]
+          ports:
+            - name: client
+              containerPort: 2181
+              protocol: TCP
+            - name: election
+              containerPort: 3888
+              protocol: TCP
+            - name: server
+              containerPort: 2888
+              protocol: TCP

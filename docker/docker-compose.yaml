@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  druid:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: deepaksood619/zendruid:v1.0.6

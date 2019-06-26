@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druid-router
+  namespace: druid
+  labels:
+    component: router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: router
+  template:
+    metadata:
+      labels:
+        component: router
+    spec:
+      containers:
+        - name: druid
+          image: deepaksood619/zendruid:v1.0.6
+          imagePullPolicy: IfNotPresent
+          args: ["bin/run-druid", "router", "/druid/conf" ]
+          ports:
+            - name: http
+              containerPort: 8888
+              protocol: TCP

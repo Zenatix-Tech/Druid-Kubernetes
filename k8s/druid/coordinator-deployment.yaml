@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druid-coordinator
+  namespace: druid
+  labels:
+    component: coordinator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: coordinator
+  template:
+    metadata:
+      labels:
+        component: coordinator
+    spec:
+      containers:
+        - name: druid
+          image: deepaksood619/zendruid:v1.0.6
+          imagePullPolicy: IfNotPresent
+          args: ["bin/run-druid", "coordinator", "/druid/conf" ]
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /var/druid/
+            name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "druid-pvc"

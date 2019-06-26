@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: druid-middlemanager
+  namespace: druid
+  labels:
+    component: middlemanager
+spec:
+  serviceName: druid-middlemanager
+  replicas: 1
+  selector:
+    matchLabels:
+      component: middlemanager
+  template:
+    metadata:
+      labels:
+        component: middlemanager
+    spec:
+      containers:
+      - name: druid
+        args: ["bin/run-druid", "middleManager", "/druid/conf" ]
+        image: deepaksood619/zendruid:v1.0.6
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8091
+          name: http
+        volumeMounts:
+        - mountPath: /var/druid/
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "druid-pvc"

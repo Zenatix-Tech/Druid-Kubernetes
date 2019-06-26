@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+    name: druid-pvc
+    namespace: druid
+spec:
+    storageClassName: azurefile
+    accessModes:
+      - ReadWriteMany
+    resources:
+        requests:
+            storage: 4Gi

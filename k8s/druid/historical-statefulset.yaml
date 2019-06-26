@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: druid-historical
+  namespace: druid
+  labels:
+    component: historical
+spec:
+  serviceName: druid-historical
+  replicas: 1
+  selector:
+    matchLabels:
+      component: historical
+  template:
+    metadata:
+      labels:
+        component: historical
+    spec:
+      containers:
+      - name: druid
+        args: ["bin/run-druid", "historical", "/druid/conf" ]
+        image: deepaksood619/zendruid:v1.0.6
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8083
+          name: http
+        volumeMounts:
+        - mountPath: /var/druid/
+          name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "druid-pvc"

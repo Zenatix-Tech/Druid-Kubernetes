@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: druid-postgres
+  namespace: druid
+  labels:
+    component: postgres
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    component: postgres

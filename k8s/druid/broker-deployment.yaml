@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druid-broker
+  namespace: druid
+  labels:
+    component: broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: broker
+  template:
+    metadata:
+      labels:
+        component: broker
+    spec:
+      containers:
+        - name: druid
+          image: deepaksood619/zendruid:v1.0.6
+          imagePullPolicy: IfNotPresent
+          args: ["bin/run-druid", "broker", "/druid/conf"]
+          ports:
+            - name: http
+              containerPort: 8082
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /var/druid/
+            name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "druid-pvc"

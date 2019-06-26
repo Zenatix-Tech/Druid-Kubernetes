@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: druid-postgres
+  namespace: druid
+  labels:
+    component: postgres
+spec:
+  serviceName: druid-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      containers:
+      - name: druid
+        image: library/postgres:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: POSTGRES_USER
+          value: "druid"
+        - name: POSTGRES_PASSWORD
+          value: "diurd"
+        - name: POSTGRES_DB
+          value: "druid"
+        ports:
+        - containerPort: 5432
+          name: http
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: data
+          subPath: postgres
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          storage: "4Gi"

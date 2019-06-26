@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druid-overlord
+  namespace: druid
+  labels:
+    component: overlord
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: overlord
+  template:
+    metadata:
+      labels:
+        component: overlord
+    spec:
+      containers:
+        - name: druid
+          image: deepaksood619/zendruid:v1.0.6
+          imagePullPolicy: IfNotPresent
+          args: ["bin/run-druid", "overlord", "/druid/conf" ]
+          ports:
+            - name: http
+              containerPort: 8090
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /var/druid/
+            name: data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "druid-pvc"
