@@ -9,4 +9,4 @@ spec:
       - ReadWriteMany
     resources:
         requests:
-            storage: 4Gi
+            storage: 300Gi

@@ -1,0 +1,103 @@
+version: '3.7'
+
+services:
+  druid-zookeeper:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+    entrypoint: ["bash", "-c", "bin/run-zk /druid/conf"]
+
+  druid-coordinator:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-coordinator
+    restart: always
+    volumes:
+      - druid-volume:/var/druid
+    ports:
+      - "8081:8081"
+    entrypoint: ["bash", "-c", "bin/run-druid coordinator /druid/conf"]
+
+  druid-overlord:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-overlord
+    restart: always
+    volumes:
+      - druid-volume:/var/druid
+    ports:
+      - "8090:8090"
+    entrypoint: ["bash", "-c", "bin/run-druid overlord /druid/conf"]
+
+  druid-middlemanager:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-middlemanager
+    restart: always
+    volumes:
+      - druid-volume:/var/druid
+    ports:
+      - "8091:8091"
+    entrypoint: ["bash", "-c", "bin/run-druid middleManager /druid/conf"]
+
+  druid-historical:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-historical
+    restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid historical /druid/conf"]
+    ports:
+      - "8083:8083"
+    volumes:
+      - druid-volume:/var/druid
+  druid-broker:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-broker
+    restart: always
+    volumes:
+      - druid-volume:/var/druid
+      - ./data:/var/druid/data
+    entrypoint: ["bash", "-c", "bin/run-druid broker /druid/conf"]
+    ports:
+      - "8082:8082"
+
+  druid-router:
+    stdin_open: true
+    tty: true
+    image: deepaksood619/zendruid:v1.0.7
+    container_name: druid-router
+    restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid router /druid/conf"]
+    ports:
+      - "8888:8888"
+
+  druid-postgresql:
+    stdin_open: true
+    tty: true
+    image: library/postgres:latest
+    container_name: druid-postgresql
+    restart: always
+    environment:
+      - POSTGRES_USER=druid
+      - POSTGRES_PASSWORD=diurd
+      - POSTGRES_DB=druid
+    ports:
+      - "5432:5432"
+    volumes:
+        - postgresql-druid-volume:/var/lib/postgresql/data
+
+volumes:
+    postgresql-druid-volume:
+        external: true
+    druid-volume:
+        external: true

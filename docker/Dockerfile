@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Kolkata
 
 # Set version and github repo which you want to build from
-ARG DRUID_VERSION=0.14.2-incubating
+ARG DRUID_VERSION=0.15.0-incubating
 ARG ZOOKEEPER_VERSION=3.4.11
 
 # Java 8
