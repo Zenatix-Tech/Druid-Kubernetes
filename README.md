@@ -26,6 +26,11 @@ kubectl apply -f k8s/postgres
 kubectl apply -f k8s/zookeeper
 kubectl apply -f k8s/druid
 
+#purging/deleting
+kubectl delete -f k8s/druid
+kubectl delete -f k8s/zookeeper
+kubectl delete -f k8s/postgres
+
 ```
 
 **curl requests**

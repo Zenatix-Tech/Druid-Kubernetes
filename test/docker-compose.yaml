@@ -4,7 +4,7 @@ services:
   druid-zookeeper:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-zookeeper
     restart: always
     ports:
@@ -14,7 +14,7 @@ services:
   druid-coordinator:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-coordinator
     restart: always
     volumes:
@@ -26,7 +26,7 @@ services:
   druid-overlord:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-overlord
     restart: always
     volumes:
@@ -38,7 +38,7 @@ services:
   druid-middlemanager:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-middlemanager
     restart: always
     volumes:
@@ -50,7 +50,7 @@ services:
   druid-historical:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-historical
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid historical /druid/conf"]
@@ -61,7 +61,7 @@ services:
   druid-broker:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-broker
     restart: always
     volumes:
@@ -74,7 +74,7 @@ services:
   druid-router:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.7
+    image: deepaksood619/zendruid:v1.0.8
     container_name: druid-router
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid router /druid/conf"]

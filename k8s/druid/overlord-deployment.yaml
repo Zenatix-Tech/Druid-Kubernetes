@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: druid
-          image: deepaksood619/zendruid:v1.0.7
+          image: deepaksood619/zendruid:v1.0.8
           imagePullPolicy: IfNotPresent
           args: ["bin/run-druid", "overlord", "/druid/conf" ]
           ports:
