@@ -3,10 +3,6 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Kolkata
 
-# Set version and github repo which you want to build from
-ARG DRUID_VERSION=0.15.0-incubating
-ARG ZOOKEEPER_VERSION=3.4.11
-
 # Java 8
 RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/mirror:\/\/mirrors/' -e 's/\/ubuntu\//\/mirrors.txt/' /etc/apt/sources.list && \
     echo "Acquire {http {Timeout \"60\";}; ftp {Timeout \"60\";};};" > /etc/apt/apt.conf.d/custom-apt.conf && \
@@ -17,11 +13,16 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 
 WORKDIR /
 
+# Set version and github repo which you want to build from
+ARG DRUID_VERSION=0.15.0-incubating
+
 RUN wget https://www-eu.apache.org/dist/incubator/druid/${DRUID_VERSION}/apache-druid-${DRUID_VERSION}-bin.tar.gz && \
       tar -xzf apache-druid-${DRUID_VERSION}-bin.tar.gz && \
       mv apache-druid-${DRUID_VERSION} druid
 
 WORKDIR /druid
+
+ARG ZOOKEEPER_VERSION=3.4.14
 
 RUN wget https://archive.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
       tar -xzf zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \

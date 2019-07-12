@@ -4,82 +4,110 @@ services:
   druid-zookeeper:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-zookeeper
     restart: always
+    entrypoint: ["bash", "-c", "bin/run-zk /druid/conf"]
+    volumes:
+      - ./conf:/druid/conf
     ports:
       - "2181:2181"
-    entrypoint: ["bash", "-c", "bin/run-zk /druid/conf"]
+    networks:
+      - zenatix-docker
 
   druid-coordinator:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-coordinator
     restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid coordinator /druid/conf"]
     volumes:
+      - ./conf:/druid/conf
       - druid-volume:/var/druid
+      - ./data:/var/druid/data
     ports:
       - "8081:8081"
-    entrypoint: ["bash", "-c", "bin/run-druid coordinator /druid/conf"]
+    networks:
+      - zenatix-docker
 
   druid-overlord:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-overlord
     restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid overlord /druid/conf"]
     volumes:
+      - ./conf:/druid/conf
       - druid-volume:/var/druid
+      - ./data:/var/druid/data
     ports:
       - "8090:8090"
-    entrypoint: ["bash", "-c", "bin/run-druid overlord /druid/conf"]
+    networks:
+      - zenatix-docker
 
   druid-middlemanager:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-middlemanager
     restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid middleManager /druid/conf"]
     volumes:
+      - ./conf:/druid/conf
       - druid-volume:/var/druid
+      - ./data:/var/druid/data
     ports:
       - "8091:8091"
-    entrypoint: ["bash", "-c", "bin/run-druid middleManager /druid/conf"]
+    networks:
+      - zenatix-docker
 
   druid-historical:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-historical
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid historical /druid/conf"]
+    volumes:
+      - ./conf:/druid/conf
+      - druid-volume:/var/druid
+      - ./data:/var/druid/data
     ports:
       - "8083:8083"
-    volumes:
-      - druid-volume:/var/druid
+    networks:
+      - zenatix-docker
+
   druid-broker:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-broker
     restart: always
+    entrypoint: ["bash", "-c", "bin/run-druid broker /druid/conf"]
     volumes:
+      - ./conf:/druid/conf
       - druid-volume:/var/druid
       - ./data:/var/druid/data
-    entrypoint: ["bash", "-c", "bin/run-druid broker /druid/conf"]
     ports:
       - "8082:8082"
+    networks:
+      - zenatix-docker
 
   druid-router:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:v1.0.8
+    image: deepaksood619/zendruid:1.0.10
     container_name: druid-router
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid router /druid/conf"]
+    volumes:
+      - ./conf:/druid/conf
     ports:
       - "8888:8888"
+    networks:
+      - zenatix-docker
 
   druid-postgresql:
     stdin_open: true
@@ -95,9 +123,16 @@ services:
       - "5432:5432"
     volumes:
         - postgresql-druid-volume:/var/lib/postgresql/data
+    networks:
+      - zenatix-docker
 
 volumes:
     postgresql-druid-volume:
         external: true
     druid-volume:
         external: true
+
+networks:
+    zenatix-docker:
+        external:
+            name: zenatix-docker

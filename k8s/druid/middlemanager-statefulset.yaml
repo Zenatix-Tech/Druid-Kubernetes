@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
       - name: druid
-        args: ["bin/run-druid", "middleManager", "/druid/conf" ]
-        image: deepaksood619/zendruid:v1.0.8
+        args: ["bin/run-druid", "middleManager", "/druid/conf"]
+        image: deepaksood619/zendruid:1.0.10
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8091
@@ -27,6 +27,16 @@ spec:
         volumeMounts:
         - mountPath: /var/druid/
           name: data
+        livenessProbe:
+          initialDelaySeconds: 60
+          httpGet:
+            path: /status/health
+            port: 8091
+        readinessProbe:
+          initialDelaySeconds: 60
+          httpGet:
+            path: /status/health
+            port: 8091
       volumes:
       - name: data
         persistentVolumeClaim:

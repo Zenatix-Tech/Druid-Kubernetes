@@ -17,13 +17,23 @@ spec:
     spec:
       containers:
         - name: druid
-          image: deepaksood619/zendruid:v1.0.8
+          image: deepaksood619/zendruid:1.0.10
           imagePullPolicy: IfNotPresent
           args: ["bin/run-druid", "broker", "/druid/conf"]
           ports:
             - name: http
               containerPort: 8082
               protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /status/health
+              port: 8082
+          readinessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /status/health
+              port: 8082
           volumeMounts:
           - mountPath: /var/druid/
             name: data
