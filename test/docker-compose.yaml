@@ -15,7 +15,7 @@ services:
   druid-coordinator:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-coordinator
     restart: always
     volumes:
@@ -32,7 +32,7 @@ services:
   druid-overlord:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-overlord
     restart: always
     volumes:
@@ -46,7 +46,7 @@ services:
   druid-middlemanager:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-middlemanager
     restart: always
     volumes:
@@ -62,7 +62,7 @@ services:
   druid-historical:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-historical
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid historical /druid/conf"]
@@ -80,7 +80,7 @@ services:
   druid-broker:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-broker
     restart: always
     volumes:
@@ -96,7 +96,7 @@ services:
   druid-router:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.0
+    image: deepaksood619/zendruid:2.0.1
     container_name: druid-router
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid router /druid/conf"]

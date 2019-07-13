@@ -19,7 +19,7 @@ spec:
       containers:
       - name: druid
         args: ["bin/run-druid", "historical", "/druid/conf"]
-        image: deepaksood619/zendruid:2.0.0
+        image: deepaksood619/zendruid:2.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8083
