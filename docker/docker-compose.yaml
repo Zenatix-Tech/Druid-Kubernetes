@@ -5,4 +5,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: deepaksood619/zendruid:1.0.10
+    image: deepaksood619/zendruid:2.0.0

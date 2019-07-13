@@ -22,13 +22,6 @@ RUN wget https://www-eu.apache.org/dist/incubator/druid/${DRUID_VERSION}/apache-
 
 WORKDIR /druid
 
-ARG ZOOKEEPER_VERSION=3.4.14
-
-RUN wget https://archive.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
-      tar -xzf zookeeper-${ZOOKEEPER_VERSION}.tar.gz && \
-      mv zookeeper-${ZOOKEEPER_VERSION} zk && \
-      rm -rf conf
-
 # Expose ports:
 # - 8888: HTTP (router)
 # - 8081: HTTP (coordinator)
@@ -36,14 +29,12 @@ RUN wget https://archive.apache.org/dist/zookeeper/zookeeper-${ZOOKEEPER_VERSION
 # - 8083: HTTP (historical)
 # - 8090: HTTP (overlord)
 # - 8091: HTTP (middlemanager)
-# - 2181: ZooKeeper
 EXPOSE 8081
 EXPOSE 8888
 EXPOSE 8082
 EXPOSE 8083
 EXPOSE 8090
 EXPOSE 8091
-EXPOSE 2181
 
 COPY conf /druid/conf
 

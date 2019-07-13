@@ -4,22 +4,21 @@ metadata:
   name: druid-zookeeper
   namespace: druid
   labels:
-    component: zookeeper
+    component: druid-zookeeper
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: zookeeper
+      component: druid-zookeeper
   template:
     metadata:
       labels:
-        component: zookeeper
+        component: druid-zookeeper
     spec:
       containers:
-        - name: druid
-          image: deepaksood619/zendruid:1.0.10
+        - name: druid-zookeeper
+          image: zookeeper:3.4.14
           imagePullPolicy: IfNotPresent
-          args: ["bin/run-zk", "/druid/conf"]
           ports:
             - name: client
               containerPort: 2181

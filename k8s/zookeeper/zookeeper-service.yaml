@@ -4,7 +4,7 @@ metadata:
   name: druid-zookeeper
   namespace: druid
   labels:
-    component: zookeeper
+    component: druid-zookeeper
 spec:
   type: ClusterIP
   ports:
@@ -21,4 +21,4 @@ spec:
     targetPort: 2888
     protocol: TCP
   selector:
-    component: zookeeper
+    component: druid-zookeeper

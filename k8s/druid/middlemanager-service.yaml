@@ -12,5 +12,17 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 8100
+      targetPort: 8100
+      protocol: TCP
+      name: peon-0
+    - port: 8101
+      targetPort: 8101
+      protocol: TCP
+      name: peon-1
+    - port: 8102
+      targetPort: 8102
+      protocol: TCP
+      name: peon-2
   selector:
     component: middlemanager
