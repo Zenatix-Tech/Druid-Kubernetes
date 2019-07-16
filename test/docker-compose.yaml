@@ -15,16 +15,17 @@ services:
   druid-coordinator:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-coordinator
     restart: always
     volumes:
       - druid-volume:/var/druid
+      - ./conf:/druid/conf
     ports:
       - "8081:8081"
     entrypoint: ["bash", "-c", "bin/run-druid coordinator /druid/conf"]
     depends_on:
-      - druid-postgresql
+      - druid-postgres
       - druid-zookeeper
     networks:
       - zenatix-docker
@@ -32,7 +33,7 @@ services:
   druid-overlord:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-overlord
     restart: always
     volumes:
@@ -46,7 +47,7 @@ services:
   druid-middlemanager:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-middlemanager
     restart: always
     volumes:
@@ -62,7 +63,7 @@ services:
   druid-historical:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-historical
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid historical /druid/conf"]
@@ -80,7 +81,7 @@ services:
   druid-broker:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-broker
     restart: always
     volumes:
@@ -96,7 +97,7 @@ services:
   druid-router:
     stdin_open: true
     tty: true
-    image: deepaksood619/zendruid:2.0.1
+    image: deepaksood619/zendruid:2.0.3
     container_name: druid-router
     restart: always
     entrypoint: ["bash", "-c", "bin/run-druid router /druid/conf"]
@@ -107,11 +108,11 @@ services:
     networks:
       - zenatix-docker
 
-  druid-postgresql:
+  druid-postgres:
     stdin_open: true
     tty: true
     image: library/postgres:latest
-    container_name: druid-postgresql
+    container_name: druid-postgres
     restart: always
     environment:
       - POSTGRES_USER=druid

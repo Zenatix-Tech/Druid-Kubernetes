@@ -24,5 +24,85 @@ spec:
       targetPort: 8102
       protocol: TCP
       name: peon-2
+    - port: 8103
+      targetPort: 8103
+      protocol: TCP
+      name: peon-3
+    - port: 8104
+      targetPort: 8104
+      protocol: TCP
+      name: peon-4
+    - port: 8105
+      targetPort: 8105
+      protocol: TCP
+      name: peon-5
+    - port: 8106
+      targetPort: 8106
+      protocol: TCP
+      name: peon-6
+    - port: 8107
+      targetPort: 8107
+      protocol: TCP
+      name: peon-7
+    - port: 8108
+      targetPort: 8108
+      protocol: TCP
+      name: peon-8
+    - port: 8109
+      targetPort: 8109
+      protocol: TCP
+      name: peon-9
+    - port: 8110
+      targetPort: 8110
+      protocol: TCP
+      name: peon-10
+    - port: 8111
+      targetPort: 8111
+      protocol: TCP
+      name: peon-11
+    - port: 8111
+      targetPort: 8111
+      protocol: TCP
+      name: peon-11
+    - port: 8111
+      targetPort: 8111
+      protocol: TCP
+      name: peon-11
+    - port: 8112
+      targetPort: 8112
+      protocol: TCP
+      name: peon-12
+    - port: 8113
+      targetPort: 8113
+      protocol: TCP
+      name: peon-13
+    - port: 8114
+      targetPort: 8114
+      protocol: TCP
+      name: peon-14
+    - port: 8115
+      targetPort: 8115
+      protocol: TCP
+      name: peon-15
+    - port: 8116
+      targetPort: 8116
+      protocol: TCP
+      name: peon-16
+    - port: 8117
+      targetPort: 8117
+      protocol: TCP
+      name: peon-17
+    - port: 8118
+      targetPort: 8118
+      protocol: TCP
+      name: peon-18
+    - port: 8119
+      targetPort: 8119
+      protocol: TCP
+      name: peon-19
+    - port: 8120
+      targetPort: 8120
+      protocol: TCP
+      name: peon-20
   selector:
     component: middlemanager

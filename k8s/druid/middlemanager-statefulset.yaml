@@ -7,7 +7,7 @@ metadata:
     component: middlemanager
 spec:
   serviceName: druid-middlemanager
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       component: middlemanager
@@ -19,7 +19,7 @@ spec:
       containers:
       - name: druid
         args: ["bin/run-druid", "middleManager", "/druid/conf"]
-        image: deepaksood619/zendruid:2.0.1
+        image: deepaksood619/zendruid:2.0.3
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8091
@@ -30,6 +30,42 @@ spec:
           name: peon-1
         - containerPort: 8102
           name: peon-2
+        - containerPort: 8103
+          name: peon-3
+        - containerPort: 8104
+          name: peon-4
+        - containerPort: 8105
+          name: peon-5
+        - containerPort: 8106
+          name: peon-6
+        - containerPort: 8107
+          name: peon-7
+        - containerPort: 8108
+          name: peon-8
+        - containerPort: 8109
+          name: peon-9
+        - containerPort: 8110
+          name: peon-10
+        - containerPort: 8111
+          name: peon-11
+        - containerPort: 8112
+          name: peon-12
+        - containerPort: 8113
+          name: peon-13
+        - containerPort: 8114
+          name: peon-14
+        - containerPort: 8115
+          name: peon-15
+        - containerPort: 8116
+          name: peon-16
+        - containerPort: 8117
+          name: peon-17
+        - containerPort: 8118
+          name: peon-18
+        - containerPort: 8119
+          name: peon-19
+        - containerPort: 8120
+          name: peon-20
         volumeMounts:
         - mountPath: /var/druid/
           name: data
