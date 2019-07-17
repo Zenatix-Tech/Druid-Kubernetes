@@ -5,6 +5,9 @@ metadata:
   namespace: druid
   labels:
     component: broker
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9187"
 spec:
   replicas: 1
   selector:
@@ -40,6 +43,13 @@ spec:
           volumeMounts:
           - mountPath: /var/druid/
             name: data
+        - name: druid-exporter
+          image: deepaksood619/druid-exporter:0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
       volumes:
       - name: data
         persistentVolumeClaim:

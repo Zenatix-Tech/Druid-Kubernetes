@@ -5,6 +5,9 @@ metadata:
   namespace: druid
   labels:
     component: middlemanager
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9187"
 spec:
   serviceName: druid-middlemanager
   replicas: 4
@@ -82,6 +85,13 @@ spec:
           httpGet:
             path: /status/health
             port: 8091
+      - name: druid-exporter
+        image: deepaksood619/druid-exporter:0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http
+            containerPort: 8000
+            protocol: TCP
       volumes:
       - name: data
         persistentVolumeClaim:
