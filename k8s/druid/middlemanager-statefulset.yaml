@@ -5,9 +5,6 @@ metadata:
   namespace: druid
   labels:
     component: middlemanager
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "8000"
 spec:
   serviceName: druid-middlemanager
   replicas: 4
@@ -18,6 +15,9 @@ spec:
     metadata:
       labels:
         component: middlemanager
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
     spec:
       containers:
       - name: druid
