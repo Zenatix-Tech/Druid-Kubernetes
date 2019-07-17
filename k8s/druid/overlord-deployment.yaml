@@ -19,7 +19,10 @@ spec:
         - name: druid
           image: deepaksood619/zendruid:2.0.3
           imagePullPolicy: IfNotPresent
-          args: ["bin/run-druid", "overlord", "/druid/conf"]
+          command:
+            - /bin/bash
+            - -c
+            - ip=$(awk 'END{print $1}' /etc/hosts) && sed -ri 's/druid.host=.*/druid.host='${ip}'/g' /druid/conf/overlord/runtime.properties && bin/run-druid overlord /druid/conf
           ports:
             - name: http
               containerPort: 8090

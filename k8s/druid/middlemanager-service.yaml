@@ -60,14 +60,6 @@ spec:
       targetPort: 8111
       protocol: TCP
       name: peon-11
-    - port: 8111
-      targetPort: 8111
-      protocol: TCP
-      name: peon-11
-    - port: 8111
-      targetPort: 8111
-      protocol: TCP
-      name: peon-11
     - port: 8112
       targetPort: 8112
       protocol: TCP
