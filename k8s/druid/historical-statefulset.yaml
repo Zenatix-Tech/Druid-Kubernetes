@@ -7,7 +7,7 @@ metadata:
     component: historical
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/port: "9187"
+    prometheus.io/port: "8000"
 spec:
   serviceName: druid-historical
   replicas: 1
