@@ -30,6 +30,10 @@ spec:
         ports:
         - containerPort: 8083
           name: http
+        resources:
+          requests:
+            cpu: 100m
+            memory: 8Gi
 #        livenessProbe:
 #          initialDelaySeconds: 60
 #          httpGet:
@@ -50,6 +54,11 @@ spec:
           - name: http
             containerPort: 8000
             protocol: TCP
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "historical"
+        effect: "NoSchedule"
       volumes:
       - name: data
         persistentVolumeClaim:
