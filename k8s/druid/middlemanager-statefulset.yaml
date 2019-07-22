@@ -25,7 +25,7 @@ spec:
           - /bin/bash
           - -c
           - ip=$(awk 'END{print $1}' /etc/hosts) && sed -ri 's/druid.host=.*/druid.host='${ip}'/g' /druid/conf/middleManager/runtime.properties && bin/run-druid middleManager /druid/conf
-        image: deepaksood619/zendruid:2.0.3
+        image: deepaksood619/zendruid:2.0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8091

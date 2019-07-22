@@ -25,7 +25,7 @@ spec:
           - /bin/bash
           - -c
           - ip=$(awk 'END{print $1}' /etc/hosts) && sed -ri 's/druid.host=.*/druid.host='${ip}'/g' /druid/conf/historical/runtime.properties && bin/run-druid historical /druid/conf
-        image: deepaksood619/zendruid:2.0.3
+        image: deepaksood619/zendruid:2.0.4
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8083
@@ -33,14 +33,14 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 8Gi
+            memory: 10Gi
 #        livenessProbe:
 #          initialDelaySeconds: 60
 #          httpGet:
 #            path: /status/health
 #            port: 8083
         readinessProbe:
-          initialDelaySeconds: 30
+          initialDelaySeconds: 120
           httpGet:
             path: /status/health
             port: 8083
@@ -59,6 +59,8 @@ spec:
         operator: "Equal"
         value: "historical"
         effect: "NoSchedule"
+      nodeSelector:
+        node: historical
       volumes:
       - name: data
         persistentVolumeClaim:

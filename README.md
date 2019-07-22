@@ -14,6 +14,29 @@ Deploy latest druid on kubernetes on AKS
 | druid-router        | 8888 |
 | druid-postgresql    | 5432 |
 
+### Zookeeper helm
+```bash
+helm repo add bitnami https://charts.bitnami.com
+
+helm install --name dz -f k8s/zookeeper-values.yaml --namespace druid bitnami/zookeeper
+
+helm delete --purge dz
+
+```
+
+### Postgres helm
+```bash
+# installing postgres
+helm install --name dpg -f k8s/postgresql-values.yaml --namespace druid stable/postgresql
+
+# upgrade postgres
+helm upgrade dpg -f k8s/postgresql-values.yaml --namespace druid stable/postgresql
+
+# deleting postgres
+helm delete --purge dpg
+
+```
+
 **Commands**
 ```bash
 # build docker image
@@ -22,15 +45,13 @@ docker-compose -f docker/docker-compose.yaml push
 
 # deploy druid on kubernetes
 kubectl apply -f k8s/azure
-kubectl apply -f k8s/postgres
-kubectl apply -f k8s/zookeeper
+
+Deploy zookeeper and postgres helm
+
 kubectl apply -f k8s/druid
 
 #purging/deleting
 kubectl delete -f k8s/druid
-kubectl delete -f k8s/zookeeper
-kubectl delete -f k8s/postgres
-
 ```
 
 **Commands**
@@ -135,13 +156,5 @@ curl -X 'DELETE' -H 'Content-Type:application/json' http://localhost:8081/druid/
 curl -X 'DELETE' -H 'Content-Type:application/json' http://localhost:8081/druid/coordinator/v1/datasources/wikipedia/segments/wikipedia_2015-09-12T00:00:00.000Z_2015-09-13T00:00:00.000Z_2019-06-26T10:39:34.338Z
 
 https://druid.apache.org/docs/latest/tutorials/tutorial-delete-data.html
-
-```
-
-### Zookeeper helm
-```bash
-helm install --name dz -f helm/zookeeper-values.yaml --namespace druid incubator/zookeeper
-
-helm delete --purge dz
 
 ```
