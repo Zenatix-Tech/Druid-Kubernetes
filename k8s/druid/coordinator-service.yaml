@@ -6,7 +6,7 @@ metadata:
   labels:
     component: coordinator
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8081
       targetPort: http

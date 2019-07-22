@@ -6,7 +6,7 @@ metadata:
   labels:
     component: broker
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8082
       targetPort: http
