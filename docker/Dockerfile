@@ -14,7 +14,7 @@ RUN sed -i -e 's/http:\/\/archive/mirror:\/\/mirrors/' -e 's/http:\/\/security/m
 WORKDIR /
 
 # Set version and github repo which you want to build from
-ARG DRUID_VERSION=0.15.0-incubating
+ARG DRUID_VERSION=0.15.1-incubating
 
 RUN wget https://www-eu.apache.org/dist/incubator/druid/${DRUID_VERSION}/apache-druid-${DRUID_VERSION}-bin.tar.gz && \
       tar -xzf apache-druid-${DRUID_VERSION}-bin.tar.gz && \

@@ -25,7 +25,7 @@ spec:
           - /bin/bash
           - -c
           - ip=$(awk 'END{print $1}' /etc/hosts) && sed -ri 's/druid.host=.*/druid.host='${ip}'/g' /druid/conf/middleManager/runtime.properties && bin/run-druid middleManager /druid/conf
-        image: deepaksood619/zendruid:2.0.4
+        image: deepaksood619/zendruid:2.0.5
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8091
@@ -80,11 +80,11 @@ spec:
 #          httpGet:
 #            path: /status/health
 #            port: 8091
-        readinessProbe:
-          initialDelaySeconds: 30
-          httpGet:
-            path: /status/health
-            port: 8091
+#        readinessProbe:
+#          initialDelaySeconds: 30
+#          httpGet:
+#            path: /status/health
+#            port: 8091
       - name: druid-exporter
         image: deepaksood619/druid-exporter:0.0.1
         imagePullPolicy: IfNotPresent

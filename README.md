@@ -14,7 +14,7 @@ Deploy latest druid on kubernetes on AKS
 | druid-router        | 8888 |
 | druid-postgresql    | 5432 |
 
-### Zookeeper helm
+### Zookeeper helm (bitnami release)
 ```bash
 helm repo add bitnami https://charts.bitnami.com
 
@@ -22,6 +22,7 @@ helm install --name dz -f k8s/zookeeper-values.yaml --namespace druid bitnami/zo
 
 helm delete --purge dz
 
+# https://github.com/bitnami/charts/tree/master/bitnami/zookeeper
 ```
 
 ### Postgres helm
