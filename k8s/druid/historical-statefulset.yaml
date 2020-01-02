@@ -25,7 +25,7 @@ spec:
           - /bin/bash
           - -c
           - ip=$(awk 'END{print $1}' /etc/hosts) && sed -ri 's/druid.host=.*/druid.host='${ip}'/g' /druid/conf/historical/runtime.properties && bin/run-druid historical /druid/conf
-        image: deepaksood619/zendruid:2.0.5
+        image: gcr.io/zenatix-data-archiver/kube-druid:0.0.1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8083
@@ -48,7 +48,7 @@ spec:
         - mountPath: /var/druid/
           name: data
       - name: druid-exporter
-        image: deepaksood619/druid-exporter:0.0.1
+        image: deepaksood619/druid-exporter:0.0.2
         imagePullPolicy: IfNotPresent
         ports:
           - name: http

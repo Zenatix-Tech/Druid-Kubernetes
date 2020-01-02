@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: druid
-          image: deepaksood619/zendruid:2.0.5
+          image: gcr.io/zenatix-data-archiver/kube-druid:0.0.1
           imagePullPolicy: IfNotPresent
           command:
             - /bin/bash
@@ -41,7 +41,7 @@ spec:
               path: /status/health
               port: 8888
         - name: druid-exporter
-          image: deepaksood619/druid-exporter:0.0.1
+          image: deepaksood619/druid-exporter:0.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

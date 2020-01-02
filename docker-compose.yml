@@ -1,0 +1,194 @@
+version: '3.7'
+
+services:
+  druid-zookeeper:
+    stdin_open: true
+    tty: true
+    image: zookeeper:3.4.14
+    container_name: druid-zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+    networks:
+      - zenatix-docker
+
+  druid-coordinator:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-coordinator
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/coordinator.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/coordinator/runtime.properties:/coordinator.runtime.properties
+    ports:
+      - "8081:8081"
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh coordinator
+#      - sleep 100000000
+    depends_on:
+      - druid-postgresql
+      - druid-zookeeper
+    networks:
+      - zenatix-docker
+
+  druid-overlord:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-overlord
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/overlord.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/overlord/runtime.properties:/overlord.runtime.properties
+    ports:
+      - "8090:8090"
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh overlord
+    networks:
+      - zenatix-docker
+
+  druid-middlemanager:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-middlemanager
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/middlemanager.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/middlemanager/runtime.properties:/middlemanager.runtime.properties
+    ports:
+      - "8091:8091"
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh middleManager
+    depends_on:
+      - druid-overlord
+    networks:
+      - zenatix-docker
+
+  druid-historical:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-historical
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/historical.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/historical/runtime.properties:/historical.runtime.properties
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh historical
+    depends_on:
+      - druid-overlord
+      - druid-middlemanager
+      - druid-coordinator
+    ports:
+      - "8083:8083"
+    networks:
+      - zenatix-docker
+
+  druid-broker:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-broker
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/broker.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/broker/runtime.properties:/broker.runtime.properties
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh broker
+    depends_on:
+      - druid-coordinator
+    ports:
+      - "8082:8082"
+    networks:
+      - zenatix-docker
+
+  druid-router:
+    stdin_open: true
+    tty: true
+    image: apache/incubator-druid:0.16.0-incubating
+    container_name: druid-router
+    restart: always
+    environment:
+      - DRUID_CONFIG=/common.runtime.properties
+      - DRUID_CONFIG_COMMON=/common.runtime.properties
+      - DRUID_CONFIG_COORDINATOR=/router.runtime.properties
+    volumes:
+      - druid-volume:/var/druid
+      - ./conf/_common/common.runtime.properties:/common.runtime.properties
+      - ./conf/router/runtime.properties:/router.runtime.properties
+    entrypoint:
+      - sh
+      - -c
+      - /druid.sh router
+    depends_on:
+      - druid-broker
+    ports:
+      - "8888:8888"
+    networks:
+      - zenatix-docker
+
+  druid-postgresql:
+    stdin_open: true
+    tty: true
+    image: library/postgres:12.0-alpine
+    container_name: druid-postgresql
+    restart: always
+    environment:
+      - POSTGRES_USER=druid
+      - POSTGRES_PASSWORD=diurd
+      - POSTGRES_DB=druid
+    ports:
+      - "5432:5432"
+    volumes:
+        - postgresql-druid-volume:/var/lib/postgresql/data
+    networks:
+      - zenatix-docker
+
+networks:
+    zenatix-docker:
+        external:
+            name: zenatix-docker
+
+volumes:
+    postgresql-druid-volume:
+        external: true
+
+    druid-volume:
+        external: true

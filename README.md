@@ -16,11 +16,12 @@ Deploy latest druid on kubernetes on AKS
 
 ### Zookeeper helm (bitnami release)
 ```bash
-helm repo add bitnami https://charts.bitnami.com
+helm3 repo add bitnami https://charts.bitnami.com
 
-helm install --name dz -f k8s/zookeeper-values.yaml --namespace druid bitnami/zookeeper
+helm3 install dz -f k8s/zookeeper-values.yaml --namespace druid bitnami/zookeeper
+helm3 upgrade dz -f k8s/zookeeper-values.yaml --namespace druid bitnami/zookeeper
 
-helm delete --purge dz
+helm3 uninstall dz -n druid
 
 # https://github.com/bitnami/charts/tree/master/bitnami/zookeeper
 ```
@@ -28,7 +29,7 @@ helm delete --purge dz
 ### Postgres helm
 ```bash
 # installing postgres
-helm install --name dpg -f k8s/postgresql-values.yaml --namespace druid stable/postgresql
+helm3 install dpg -f k8s/postgresql-values.yaml --namespace druid stable/postgresql
 
 # upgrade postgres
 helm upgrade dpg -f k8s/postgresql-values.yaml --namespace druid stable/postgresql
